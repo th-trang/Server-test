@@ -1,22 +1,33 @@
 const Modbus = require('modbus-serial');
 const express = require('express');
 const WebSocket = require('ws');
-const mysql = require('mysql');
 const bodyParser = require('body-parser')
+const authRoutes = require('./routes/auth.js')
+const errorController = require('./controllers/error')
+const cors = require('cors')
 
 
 const main = express();
-const port = 3000;
+const ports = process.env.PORT || 3000;
+
+main.use(cors())
 
 main.use(bodyParser.json())
 
 main.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT DELETE')
-  res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization')
+  res.setHeader('Access-Control-Allow-Methods','PUT, GET, HEAD, POST, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers','content-type, AuthorizationContent-Type, Accept, X-Custom-Header, Authorization')
   next()
 })
 
+main.use('/auth', authRoutes);
+
+main.use(errorController.get404);
+
+main.use(errorController.get500);
+
+main.listen(ports, () => console.log(`Listening on port ${ports}`));
 // Kết nối tới cơ sở dữ liệu MySQL
 // const db = mysql.createConnection({
 //   host: 'localhost',
@@ -95,7 +106,6 @@ main.use((req, res, next) => {
 //   res.sendFile(__dirname + '/src/index.html');
 // });
 
-main.listen(port,() => console.log(`Listening on port ${port}`))
 
 // // Kết nối tới thiết bị Modbus
 // const client = new Modbus();
