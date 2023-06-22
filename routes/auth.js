@@ -8,20 +8,20 @@ router.post(
   '/signup',
   [
     body('name').trim().not().isEmpty(),
-    body('username').trim().isLength({ max: 15 }).custom(async (username) => {
+    body('username').trim().isLength({ max: 15 })
+    .custom(async (username) => {
       const user = await User.find(username);
-      if (username[0].length > 0) {
+      if (user[0].length > 0) {
         return Promise.reject('Username already exists!');
       }
     }),
     body('password').trim().isLength({ min: 7 })
   ],
-  authController.signup
+
+  authController.signup,
+  
 );
 
-router.post(
-  '/login',
-  authController.login
-);
+router.post('/login', authController.login);
 
 module.exports = router;

@@ -6,20 +6,21 @@ const authRoutes = require('./routes/auth.js')
 const errorController = require('./controllers/error')
 const cors = require('cors')
 
-
 const main = express();
 const ports = process.env.PORT || 3000;
 
-main.use(cors())
 
 main.use(bodyParser.json())
 
+main.use(cors())
+
 main.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin','*')
-  res.setHeader('Access-Control-Allow-Methods','PUT, GET, HEAD, POST, DELETE, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers','content-type, AuthorizationContent-Type, Accept, X-Custom-Header, Authorization')
+  res.setHeader('Access-Control-Allow-Methods','GET,OPTIONS,POST,PUT')
+  res.setHeader('Access-Control-Allow-Headers','Origin, Accept, X-Requested-With, Content-Type')
   next()
-})
+});
+
 
 main.use('/auth', authRoutes);
 
