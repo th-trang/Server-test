@@ -1,6 +1,6 @@
 {
     "host": "localhost",
     "user": "admin",
-    "database": "users",
+    "database": "cems",
     "password": "Admin@123"
 }
