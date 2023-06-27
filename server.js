@@ -2,7 +2,8 @@ const Modbus = require('modbus-serial');
 const express = require('express');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser')
-const authRoutes = require('./routes/auth.js')
+const authRoutes = require('./routes/auth')
+const dataRoutes = require('./routes/data')
 const errorController = require('./controllers/error')
 const cors = require('cors')
 
@@ -23,6 +24,8 @@ main.use((req, res, next) => {
 
 
 main.use('/auth', authRoutes);
+
+main.use('/data', dataRoutes);
 
 main.use(errorController.get404);
 
