@@ -1,13 +1,15 @@
 const db = require('../util/database')
 
 module.exports = class Data {
-    constructor(tag, name, setPoint, realtimeValue, unit, designP) {
+    constructor(tag, name, expectedValue, realtimeValue, unit, designP, upperbound, lowerbound) {
         this.name = name;
         this.tag = tag;
         this.realtimeValue = realtimeValue;
-        this.setPoint = setPoint;
+        this.expectedValue = expectedValue;
         this.unit = unit;
         this.designP = designP;
+        this.upperbound = upperbound;
+        this.lowerbound = lowerbound;
     }
 
     static fetchAll() {
@@ -16,9 +18,15 @@ module.exports = class Data {
 
     static save(data) {
         return db.execute(
-            'INSERT INTO data (tag, name, setPoint, realtimeValue, unit, designP) VALUES (?, ?, ?, ?, ?, ?)',
-             [data.tag, data.name, data.setPoint, data.realtimeValue, data.unit, data.designP ]
-        );        
-    }
-};
+          'INSERT INTO data (tag, name, expectedValue, realtimeValue, unit, designP, upperbound, lowerbound) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+          [data.tag, data.name, data.expectedValue, data.realtimeValue, data.unit, data.designP, data.upperbound, data.lowerbound]
+        );
+      }
+
+    // static updateExpValue(data) {
+    //     return db.execute(
+    //         'UPDATE data SET expectedValue = ? WHERE tag = ? ', [data.expectedValue, data.tag]//take another look, sth like update
+    //     );        
+    // }
+}
 
