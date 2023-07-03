@@ -32,21 +32,7 @@ main.use(errorController.get404);
 main.use(errorController.get500);
 
 main.listen(ports, () => console.log(`Listening on port ${ports}`));
-// Kết nối tới cơ sở dữ liệu MySQL
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'admin',
-//   password: 'Admin@123',
-//   database: 'DB_CEM'
-// });
 
-// db.connect((err) => {
-//   if (err){
-//     console.error('Lỗi kết nối cơ sở dữ liệu', err);
-//   } else {
-//     console.log("Đã kết nối thành công đến cơ sở dữ liệu MySQL.");
-//   }
-// });
 
 // // Khởi tạo máy chủ WebSocket
 // const wss = new WebSocket.Server({ noServer: true });
