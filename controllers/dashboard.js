@@ -49,15 +49,17 @@ exports.postData = async(req, res, next) => {
     }
 };
 
-// exports.update = async (req, res, next) => { 
-//     try {
-//         const [allData] = await Data.updateExpValue(req.params.tag);
-//         res.status(200).json(allData)
-//     } catch (error) {
-//         if (!error.statusCode) {
-//             error.statusCode = 500;
-//         }
-//         next(error)
-//     }
-// };
+exports.updateData = async (req, res, next) => {
+    try {
+      const putResponse = await Data.update(req.body.tag, req.body.expectedValue);
+      console.log(putResponse)
+      res.status(200).json(putResponse);
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    }
+  };
+  
 

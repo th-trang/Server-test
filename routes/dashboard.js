@@ -19,10 +19,9 @@ router.post(
     body('upperbound').trim(),
     body('lowerbound').trim()
   ],
-
   dashboardController.postData,
 );
 
-// router.put(":/tag", dashboardController.update)
+router.put("/", dashboardController.updateData)
 
 module.exports = router;

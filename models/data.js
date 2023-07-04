@@ -23,10 +23,12 @@ module.exports = class Data {
         );
       }
 
-    // static updateExpValue(data) {
-    //     return db.execute(
-    //         'UPDATE data SET expectedValue = ? WHERE tag = ? ', [data.expectedValue, data.tag]//take another look, sth like update
-    //     );        
-    // }
+      static update(tag, expectedValue) {
+        return db.execute('UPDATE data SET expectedValue = ? WHERE tag = ?', [expectedValue, tag]);
+      }
+
+      static updateBounds(tag, upperbound, lowerbound) {
+        return db.execute('UPDATE data SET upperbound = ?, lowerbound = ? WHERE tag = ?', [upperbound, lowerbound, tag]);
+      }
 }
 

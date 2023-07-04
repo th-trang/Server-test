@@ -3,6 +3,7 @@ const express = require('express');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/auth')
+const customizeRoutes = require('./routes/customize')
 const dashboardRoutes = require('./routes/dashboard')
 const errorController = require('./controllers/error')
 const cors = require('cors')
@@ -26,6 +27,8 @@ main.use((req, res, next) => {
 main.use('/auth', authRoutes);
 
 main.use('/dashboard', dashboardRoutes);
+
+main.use('/customize', customizeRoutes);
 
 main.use(errorController.get404);
 
