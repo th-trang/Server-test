@@ -22,6 +22,6 @@ router.post(
   dashboardController.postData,
 );
 
-router.put("/", dashboardController.updateData)
+router.put("/", auth, dashboardController.updateData)
 
 module.exports = router;
