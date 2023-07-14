@@ -1,7 +1,6 @@
 {
   "name": "ems-server",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,5 +20,6 @@
     "mysql2": "^3.5.0",
     "nodemon": "^2.0.22",
     "ws": "^8.13.0"
-  }
+  },
+  "description": ""
 }

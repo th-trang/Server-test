@@ -7,6 +7,10 @@ module.exports = class User{
         this.password = password;
     }
 
+    static fetchAll() {
+        return db.execute('SELECT * FROM users')
+      }
+
     static find(username) {
         return db.execute(
             'SELECT * FROM users WHERE username = ?',[username]
@@ -20,4 +24,3 @@ module.exports = class User{
         );        
     }
 };
-
