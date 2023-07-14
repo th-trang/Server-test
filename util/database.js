@@ -108,7 +108,8 @@ function insertFloatValue(floatArray){
         }
       console.log('Dữ liệu đã được cập nhật thành công vào cơ sở dữ liệu.');
       });
-}}
+    }
+}
 
 connection.release();//Tra ket noi ve sau khi hoan thanh truy van
 console.log('Đã trả kết nối về pool.');
