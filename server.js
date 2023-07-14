@@ -25,20 +25,21 @@ main.use('/dashboard', dashboardRoutes);
 main.use('/customize', customizeRoutes);
 main.use(errorController.get404);
 main.use(errorController.get500);
+database.insertInitialValues();
 main.listen(ports, () => console.log(`Listening on port ${ports}`));
 
 // Kết nối tới thiết bị Modbus
-  const client = new Modbus();
-  const MODBUS_TCP_PORT = 502;
-  const MODBUS_TCP_IP = '192.168.1.10';
-  
-  client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
-    console.log('Kết nối thành công đến thiết bị Modbus.');
-  });
-  
-  client.on('error', (err) => {
-    console.error('Lỗi kết nối Modbus:', err);
-  });
+const client = new Modbus();
+const MODBUS_TCP_PORT = 502;
+const MODBUS_TCP_IP = '192.168.30.41';
+
+client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
+  console.log('Kết nối thành công đến thiết bị Modbus.');
+});
+
+client.on('error', (err) => {
+  console.error('Lỗi kết nối Modbus:', err);
+});
 
 // Gửi dữ liệu từ thiết bị Modbus mỗi giây
 const interval = setInterval(() => {
