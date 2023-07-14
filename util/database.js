@@ -90,7 +90,7 @@ function insertFloatValue(floatArray){
           tag = 'T-TT0301';
           break;
         case 17:
-          tag = 'T-TT0301';
+          tag = 'T-TT0302';
           break;
         default:
           break;
