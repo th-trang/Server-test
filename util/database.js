@@ -98,16 +98,16 @@ function insertFloatValue(floatArray){
 
       // Thực hiện truy vấn chỉ với các giá trị i cụ thể
       sql = `UPDATE cems.data SET realtimeValue = ? WHERE tag = ?`;
-    const values = [floatValue, tag];
+      const values = [floatValue, tag];
 
-    //Query
-    connection.query(sql, values, (error, results, fields) => {
-      if(error){
-        console.error('Lỗi khi cập nhật dữ liệu: ' + error.message);
-        return;
-      }
-    console.log('Dữ liệu đã được cập nhật thành công vào cơ sở dữ liệu.');
-  });
+      //Query
+      connection.query(sql, values, (error, results, fields) => {
+        if(error){
+          console.error('Lỗi khi cập nhật dữ liệu: ' + error.message);
+          return;
+        }
+      console.log('Dữ liệu đã được cập nhật thành công vào cơ sở dữ liệu.');
+      });
 }}
 
 connection.release();//Tra ket noi ve sau khi hoan thanh truy van
