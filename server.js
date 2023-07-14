@@ -31,7 +31,9 @@ main.listen(ports, () => console.log(`Listening on port ${ports}`));
 // Kết nối tới thiết bị Modbus
 const client = new Modbus();
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.41';
+const MODBUS_TCP_IP = '192.168.30.41';//Thay đổi địa chỉ IP theo thiết bị kết nối
+//IP Dlogger: 192.168.1.5
+//IP VMM Simulation: 192.168.30.41
 
 client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
   console.log('Kết nối thành công đến thiết bị Modbus.');

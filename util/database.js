@@ -12,6 +12,7 @@ const pool = mysql.createPool({
 
 function insertInitialValues(){
   //Initial Value for Table SQL
+  //Có thể khởi tạo expectedValue, upperbound, lowerbound ở đây.
   const initialValues = [
     [`1HNE10CQ207`, `Flue gas H2O`, 0, 0, 'vol', 'at stack', 11.0, 9.0],
     [`1HNE10CQ205`, `Flue gas HCL`, 1, 1, 'mg/Nm3', 'at stack', 11.0, 9.0],
