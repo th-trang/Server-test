@@ -1,5 +1,6 @@
 const Modbus = require('modbus-serial');
 const express = require('express');
+const WebSocket = require('ws');
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/auth')
 const customizeRoutes = require('./routes/customize')
@@ -9,46 +10,52 @@ const cors = require('cors')
 const databaseUtil = require('./util/database');
 
 const main = express();
+const ports = process.env.PORT || 3000;
 
-const init = async () => {
-  try {
-    // Khởi tạo kết nối cơ sở dữ liệu
-    await databaseUtil.pool;
-    console.log('Kết nối cơ sở dữ liệu thành công');
+main.use(bodyParser.json())
 
-    // Chèn dữ liệu ban đầu vào cơ sở dữ liệu
-    databaseUtil.insertInitialValuesToData();
-    databaseUtil.insertInitialValuesToUsers();
+main.use(cors())
 
-    main.use(bodyParser.json())
-    main.use(cors())
-    main.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin','*')
-      res.setHeader('Access-Control-Allow-Methods','GET,OPTIONS,POST,PUT')
-      res.setHeader('Access-Control-Allow-Headers','Origin, Accept, X-Requested-With, Content-Type')
-      next()
-    });
+main.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin','*')
+  res.setHeader('Access-Control-Allow-Methods','GET,OPTIONS,POST,PUT')
+  res.setHeader('Access-Control-Allow-Headers','Origin, Accept, X-Requested-With, Content-Type')
+  next()
+});
 
-    main.use('/auth', authRoutes);
-    main.use('/dashboard', dashboardRoutes);
-    main.use('/customize', customizeRoutes);
-    main.use(errorController.get404);
-    main.use(errorController.get500);
 
-    // Khởi động máy chủ
-    const port = process.env.PORT || 3000;
-    main.listen(port, () => {
-      console.log(`Máy chủ đang lắng nghe tại cổng ${port}`);
-    });
-  } catch (error) {
-    console.error('Lỗi khi khởi chạy ứng dụng:', error);
-  }
-};
+main.use('/auth', authRoutes);
+
+main.use('/dashboard', dashboardRoutes);
+
+main.use('/customize', customizeRoutes);
+
+main.use(errorController.get404);
+
+main.use(errorController.get500);
+
+main.listen(ports, () => console.log(`Listening on port ${ports}`));
+
+//databaseUtil.insertInitialValuesToData();
+
+// const init = async () => {
+//   try {
+//     // Khởi tạo kết nối cơ sở dữ liệu
+//     await databaseUtil.pool;
+//     console.log('Kết nối cơ sở dữ liệu thành công');
+
+//     // Chèn dữ liệu ban đầu vào cơ sở dữ liệu
+//     databaseUtil.insertInitialValuesToData();
+
+//   } catch (error) {
+//     console.error('Lỗi khi khởi chạy ứng dụng:', error);
+//   }
+// };
 
 // Kết nối tới thiết bị Modbus
 const client = new Modbus();
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.23';//Thay đổi địa chỉ IP theo thiết bị kết nối
+const MODBUS_TCP_IP = '192.168.171.1';//Thay đổi địa chỉ IP theo thiết bị kết nối
 //IP Dlogger: 192.168.1.5
 //IP VMM Simulation: 192.168.30.41
 
@@ -79,7 +86,7 @@ const interval = setInterval(() => {
         floatArray.push(roundedValue);
       }
     //  const lastFloatValue = floatArray[floatArray.length - 1];
-      // console.log('Gia tri doc duoc: ', floatArray);
+      console.log('Gia tri doc duoc: ', floatArray);
 
       databaseUtil.insertFloatValue(floatArray);
       // Sử dụng giá trị floatValue cuối cùng
@@ -87,5 +94,3 @@ const interval = setInterval(() => {
   });
 }, 1000); // Gửi dữ liệu từ thiết bị Modbus mỗi giây
 
-// Khởi chạy ứng dụng
-init();

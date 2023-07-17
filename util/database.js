@@ -40,26 +40,6 @@ function insertInitialValuesToData() {
   });
 }
 
-async function insertInitialValuesToUsers() {
-  // Initial values for table cems.users
-  const userInitialValues = [
-    ['Admin', 'Admin', 'Admin@123'],
-  ];
-
-  try {
-    for (const user of userInitialValues) {
-      const hashedPassword = bcrypt.hashSync(user[2], 12);
-      const sql = `INSERT INTO \`users\` (\`name\`, \`username\`, \`password\`) VALUES (?, ?, ?)`;
-      const values = [user[0], user[1], hashedPassword];
-
-      await pool.promise().query(sql, values);
-    }
-    console.log('Dữ liệu ban đầu đã được chèn thành công vào bảng "users".');
-  } catch (error) {
-    console.error('Lỗi khi chèn dữ liệu ban đầu vào bảng "users":', error);
-  }
-}
-
 function insertFloatValue(floatArray) {
   // Lấy một kết nối từ pool
   pool.getConnection((err, connection) => {
@@ -138,6 +118,5 @@ function insertFloatValue(floatArray) {
 module.exports = {
   pool: pool.promise(),
   insertInitialValuesToData: insertInitialValuesToData,
-  insertInitialValuesToUsers: insertInitialValuesToUsers,
   insertFloatValue: insertFloatValue,
 };
