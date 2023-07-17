@@ -45,11 +45,10 @@ const init = async () => {
   }
 };
 
-
 // Kết nối tới thiết bị Modbus
 const client = new Modbus();
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.100.5';//Thay đổi địa chỉ IP theo thiết bị kết nối
+const MODBUS_TCP_IP = '192.168.30.23';//Thay đổi địa chỉ IP theo thiết bị kết nối
 //IP Dlogger: 192.168.1.5
 //IP VMM Simulation: 192.168.30.41
 

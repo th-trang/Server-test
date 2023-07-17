@@ -18,9 +18,12 @@ module.exports = class User{
     }
 
     static save(user) {
-        return db.execute(
-            'INSERT INTO users (name, username, password) VALUES (?, ?, ?)',
-             [user.name, user.username, user.password]
-        );        
+      return db.execute(
+        'INSERT INTO users (name, username, password) VALUES (?, ?, ?)',
+        [user.name, user.username, user.password]
+      ).catch(error => {
+        console.error('Lỗi khi chèn người dùng mới:', error);
+        throw error;
+      });
     }
 };
