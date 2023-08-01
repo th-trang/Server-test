@@ -8,9 +8,8 @@ const data = require('../models/data');
 router.get('/', auth, async (req, res) => {
   try {
     const [allData] = await data.fetchAll();
-    //Trả về HTTP respone cho yêu cầu GET /dashboard
     res.status(200).json(allData);
-    console.log('data', allData);
+    //console.log('data', allData);
   } catch (err) {
     console.error('Error while reading modbus and writing to SQL:', err);
     res.status(500).send('Error occurred');

@@ -140,11 +140,11 @@ io.on('connection', (socket) => {
     try {
       const [allData] = await data.fetchAll();
       socket.emit('data', allData);
-      console.log('Giá trị gửi đi WebSocket:', allData);
+//      console.log('Giá trị gửi đi WebSocket:', allData);
     } catch (err) {
       console.error('Error while querying data from SQL:', err);
     }
-  }, 2000);
+  }, 500);
 });
 
-setInterval(readAndWriteData, 1000);
+setInterval(readAndWriteData, 500);
