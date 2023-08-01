@@ -7,5 +7,5 @@ const pool = mysql.createPool({
     database: config.database,
     password: config.password
 });
-console.log('Kết nối thành công đến SQl')
+console.log('Connected SQl database');
 module.exports = pool.promise(); 
