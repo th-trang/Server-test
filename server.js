@@ -12,7 +12,7 @@ const dataModels = require('./models/data');
 // Kết nối tới Modbus
 const Modbus = require('modbus-serial');
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.28';
+const MODBUS_TCP_IP = '192.168.1.7';
 
 const client = new Modbus();
 client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, ()=> {
@@ -144,6 +144,16 @@ const wss = new WebSocket.Server({ noServer: true });
 server.on('upgrade', (request, socket, head) => {
   wss.handleUpgrade(request, socket, head, (ws) => {
     wss.emit('connection', ws, request);
+  });
+});
+
+// Xử lý sự kiện khi có máy khách kết nối thành công
+wss.on('connection', (ws, req) => {
+  console.log('WebSocket connected!');
+
+  // Đóng kết nối WebSocket khi máy khách ngắt kết nối
+  ws.on('close', () => {
+    console.log('WebSocket disconnected!');
   });
 });
 

@@ -20,7 +20,8 @@ router.get('/', auth, async (req, res) => {
 });
 
 // Kết nối WebSocket khi máy khách yêu cầu
-router.ws('/', (ws, req) => {
+router.ws('/', auth, (ws, req) => {
+  console.log('Client request connect WebSocket!')
   // Gửi dữ liệu từ SQL cho máy khách khi kết nối WebSocket được thiết lập
   data.fetchAll()
     .then(([allData]) => {
@@ -36,7 +37,6 @@ router.ws('/', (ws, req) => {
     console.log('Dữ liệu gửi đi cho máy khách:', newData);
   };
 });
-
 
 // Đối với các tuyến không tồn tại, trả về trang 404.
 router.use((req, res) => {

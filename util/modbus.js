@@ -4,7 +4,7 @@ const Data = require('../models/data');
 
 // Thiết lập thông tin kết nối Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.28';
+const MODBUS_TCP_IP = '192.168.30.22';
 
 // Tạo một client Modbus
 const client = new Modbus();
