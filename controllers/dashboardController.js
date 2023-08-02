@@ -1,19 +1,31 @@
 const { validationResult } = require('express-validator');
 const data = require('../models/data');
-const modbusUtil = require('../util/modbus');
 
-// exports.fetchAll = async (req, res, next) => {
-//     try {
-//         //Lấy dữ liệu từ SQL và trả về kết quả
-//         const [allData] = await data.fetchAll();
-//         res.status(200).json(allData)
-//     } catch (error) {
-//         if (!error.statusCode) {
-//             error.statusCode = 500;
-//         }
-//         next(error);
-//     }
-// };
+exports.fetchAll = async (req, res, next) => {
+    try {
+        //Lấy dữ liệu từ SQL và trả về kết quả
+        const [allData] = await data.fetchAll();
+        res.status(200).json(allData)
+    } catch (error) {
+        if (!error.statusCode) {
+            error.statusCode = 500;
+        }
+        next(error);
+    }
+};
+
+exports.updateExpectedData = async (req, res, next) => {
+    try {
+      const putResponse = await data.updateExpectedValue(req.body.tag, req.body.expectedValue);
+    //   console.log(putResponse)
+      res.status(200).json(putResponse);
+    } catch (err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    }
+};
 
 // exports.postData = async(req, res, next) => {
 //     const errors = validationResult(req);
@@ -52,30 +64,4 @@ const modbusUtil = require('../util/modbus');
 //     }
 // };
 
-// exports.updateExpectedData = async (req, res, next) => {
-//     try {
-//       const putResponse = await data.updateExpectedValue(req.body.tag, req.body.expectedValue);
-//       console.log(putResponse)
-//       res.status(200).json(putResponse);
-//     } catch (err) {
-//       if (!err.statusCode) {
-//         err.statusCode = 500;
-//       }
-//       next(err);
-//     }
-// };
 
-exports.showDashboard = async (req, res, next) => {
-    try{
-        //Truy vấn dữ liệu từ SQL bằng phương thức fetchAll
-        const [allData] = await data.fetchAll();
-
-        //Trả về HTTP respone cho yêu cầu GET /dashboard
-        res.status(200).json(allData)
-    } catch (error) {
-        if (!error.statusCode){
-            error.statusCode = 500;
-        }
-        next(error);
-    }
-};

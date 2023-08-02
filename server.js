@@ -12,7 +12,7 @@ const Modbus = require('modbus-serial');
 
 // Kết nối tới Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.22';
+const MODBUS_TCP_IP = '192.168.1.10';
 
 const client = new Modbus();
 client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
@@ -122,7 +122,7 @@ main.use(errorController.get404);
 main.use(errorController.get500);
 
 const server = main.listen(ports, () => {
-  console.log(`Máy chủ đang lắng nghe tại http://localhost:${ports}`);
+  console.log(`Server running on:  http://localhost:${ports}`);
 });
 
 const io = socketIo(server, {
@@ -134,7 +134,7 @@ const io = socketIo(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('Đã kết nối thành công với trình duyệt');
+  console.log('WebSocket Connected.');
 
   setInterval(async () => {
     try {
