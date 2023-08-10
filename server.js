@@ -12,7 +12,7 @@ const Modbus = require('modbus-serial');
 
 // Kết nối tới Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.19';
+const MODBUS_TCP_IP = '192.168.30.25';
 
 const client = new Modbus();
 client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
@@ -73,10 +73,15 @@ async function readAndWriteData() {
         tag = tagLookup[i];
 
 
-        const sql = `UPDATE data SET realtimeValue = ? WHERE tag = ?`;
-        const values = [floatValue, tag];
+        const sql1 = `UPDATE data SET realtimeValue = ? WHERE tag = ?`;
+        const values1 = [floatValue, tag];
 
-        await connection.query(sql, values);
+        await connection.query(sql1, values1);
+
+        const insertSql = `INSERT INTO histories (tag, realtimeValue) VALUES (?, ?)`;
+        const insertValues = [tag, floatValue];
+
+        await connection.query(insertSql, insertValues);
       }
     }
 
@@ -117,11 +122,11 @@ io.on('connection', (socket) => {
     try {
       const [allData] = await data.fetchAll();
       socket.emit('data', allData);
-//      console.log('Giá trị gửi đi WebSocket:', allData);
+      //      console.log('Giá trị gửi đi WebSocket:', allData);
     } catch (err) {
       console.error('Error while querying data from SQL:', err);
     }
-  }, 500);
+  }, 1000);
 });
 
-setInterval(readAndWriteData, 500);
+setInterval(readAndWriteData, 1000);
