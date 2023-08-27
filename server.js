@@ -4,15 +4,19 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const customizeRoutes = require('./routes/customize');
 const dashboardRoutes = require('./routes/dashboard');
+const trendRoutes = require('./routes/trend');
 const errorController = require('./controllers/error');
 const cors = require('cors');
 const db = require('./util/database');
 const data = require('./models/data');
+const histories = require('./models/histories')
 const Modbus = require('modbus-serial');
+const { fetchAll } = require('./controllers/dashboard');
+const { fetchStat } = require('./controllers/trend');
 
 // Kết nối tới Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.25';
+const MODBUS_TCP_IP = '192.168.30.28';
 
 const client = new Modbus();
 client.connectTCP(MODBUS_TCP_IP, { port: MODBUS_TCP_PORT }, () => {
@@ -100,6 +104,7 @@ main.use(cors());
 main.use('/auth', authRoutes);
 main.use('/dashboard', dashboardRoutes);
 main.use('/customize', customizeRoutes);
+main.use('/trend', trendRoutes);
 main.use(errorController.get404);
 main.use(errorController.get500);
 
@@ -121,8 +126,9 @@ io.on('connection', (socket) => {
   setInterval(async () => {
     try {
       const [allData] = await data.fetchAll();
+      const [allStat] = await histories.fetchStat();
       socket.emit('data', allData);
-      //      console.log('Giá trị gửi đi WebSocket:', allData);
+      socket.emit('stat', allStat);
     } catch (err) {
       console.error('Error while querying data from SQL:', err);
     }
