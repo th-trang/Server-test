@@ -24,4 +24,7 @@ module.exports = class Data {
     return db.execute('UPDATE data SET upperbound = ?, lowerbound = ? WHERE tag = ?', [upperbound, lowerbound, tag]);
   }
   
+  static fetchBounds(name) {
+    return db.execute('CALL get_bounds(?)', [name]);
+  }
 };

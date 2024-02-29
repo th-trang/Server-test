@@ -15,7 +15,7 @@ const Modbus = require('modbus-serial');
 
 // Kết nối tới Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.1.180';
+const MODBUS_TCP_IP = '192.168.1.13';
 const registerData = 72;
 const registerStatus = 154;
 const numberofRegister = 24;//số thanh ghi luôn chẵn
@@ -121,8 +121,10 @@ async function readAndWriteData() {
       const tag = tagMap[i];
       const sql = `UPDATE data SET realtimeValue = ?, status = ?, time = NOW() WHERE tag = ?`;
       const values = [floatData, statusText, tag];
-      await connection.query(sql, values);
+      const meow = await connection.query(sql, values); 
+      console.log(meow)
     }
+
     
     const insertSql = `
       INSERT INTO histories
@@ -172,7 +174,7 @@ const io = socketIo(server, {
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
 });
-
+        
 io.on('connection', (socket) => {
   console.log('WebSocket Connected.');
 
@@ -185,7 +187,7 @@ io.on('connection', (socket) => {
     } catch (err) {
       console.error('Error while querying data from SQL:', err);
     }
-  }, 1000);
+  }, 10000);
 });
 
 connectModbus();

@@ -8,4 +8,6 @@ router.get('/', auth, dashboardController.fetchAll);
 
 router.put('/', auth, dashboardController.updateExpectedData);
 
+//router.put('/', dashboardController.updateRealtimeValue)
+
 module.exports = router;

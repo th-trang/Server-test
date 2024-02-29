@@ -6,4 +6,6 @@ const auth = require('../middleware/auth')
 
 router.get('/', trendController.fetchStat);
 
+//router.get('/', trendController.fetchStatDetail);
+
 module.exports = router;
