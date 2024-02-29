@@ -15,7 +15,7 @@ const Modbus = require('modbus-serial');
 
 // Kết nối tới Modbus
 const MODBUS_TCP_PORT = 502;
-const MODBUS_TCP_IP = '192.168.30.21';
+const MODBUS_TCP_IP = '192.168.1.180';
 const registerData = 72;
 const registerStatus = 154;
 const numberofRegister = 24;//số thanh ghi luôn chẵn
@@ -189,4 +189,4 @@ io.on('connection', (socket) => {
 });
 
 connectModbus();
-setInterval(readAndWriteData, 1000);
+setInterval(readAndWriteData, 10000);
