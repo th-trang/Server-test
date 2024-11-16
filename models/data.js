@@ -27,4 +27,8 @@ module.exports = class Data {
   static fetchBounds(name) {
     return db.execute('CALL get_bounds(?)', [name]);
   }
+
+  // static updateRealtimeValue(tag, realtimeValue, status) {
+  //   return db.execute('UPDATE data SET realtimeValue = ?, status = ?, time = NOW() WHERE tag = ?', [realtimeValue, status, tag])
+  // }
 };

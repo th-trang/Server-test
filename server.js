@@ -121,8 +121,7 @@ async function readAndWriteData() {
       const tag = tagMap[i];
       const sql = `UPDATE data SET realtimeValue = ?, status = ?, time = NOW() WHERE tag = ?`;
       const values = [floatData, statusText, tag];
-      const meow = await connection.query(sql, values); 
-      console.log(meow)
+      await connection.query(sql, values); 
     }
 
     

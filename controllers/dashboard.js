@@ -24,5 +24,15 @@ exports.updateExpectedData = async (req, res, next) => {
     }
 };
 
-//exports.updateRealtimeValue = async (req, res, next) => {};
+// exports.updateRealtimeValue = async (req, res, next) => {
+//   try {
+//     const [updateRealtimeValue] = await Data.updateRealtimeValue(req.body.tag, req.body,realtimeValue, req.body.status);
+//     res.status(200).json(updateRealtimeValue);
+//   } catch (error) {
+//     if (!error.statusCode) {
+//       error.statusCode = 500
+//     }
+//     next(error)
+//   }
+// };
 
